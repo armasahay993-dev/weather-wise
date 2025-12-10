@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WeatherWise — Beautiful</title>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">☀️</div>
+        <div>
+          <h1>WeatherWise</h1>
+          <p class="tag">Fast • Pretty • Reliable</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="main-grid">
+      <!-- left column: search, favorites, alerts -->
+      <section class="left-column card">
+        <form id="searchForm" class="search-form" onsubmit="return false;">
+          <label for="cityInput" class="visually-hidden">City</label>
+          <input id="cityInput" placeholder="Search city, e.g. Hyderabad" aria-label="City" autocomplete="off" />
+          <button id="searchBtn" class="primary-btn" type="button">Search</button>
+        </form>
+
+        <div id="controlsRow" class="controls-row">
+          <button id="geoBtn" class="secondary-btn">Use my location</button>
+          <button id="saveBtn" class="secondary-btn">Save</button>
+        </div>
+
+        <div class="favorites card-sub">
+          <h3>Favorites</h3>
+          <ul id="favoritesList" class="fav-list" aria-live="polite"></ul>
+        </div>
+
+        <div id="alertsBox" class="alerts card-sub hidden" aria-live="polite"></div>
+      </section>
+
+      <!-- middle column: current + chart -->
+      <section class="mid-column">
+        <div id="currentCard" class="current-card card hidden" aria-live="polite">
+          <div class="current-top">
+            <div class="current-left">
+              <div id="cityName" class="city-name">—</div>
+              <div id="localTime" class="local-time muted small">—</div>
+              <div id="condition" class="condition muted">—</div>
+            </div>
+            <div class="current-right">
+              <div id="temp" class="temp-large">—°C</div>
+              <div id="feels" class="muted small">Feels like —</div>
+            </div>
+          </div>
+
+          <div class="current-stats">
+            <div class="stat">
+              <div class="stat-title">Humidity</div>
+              <div id="humidity" class="stat-value">—%</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">Wind</div>
+              <div id="wind" class="stat-value">— m/s</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">Pressure</div>
+              <div id="pressure" class="stat-value">— hPa</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="chartCard" class="card chart-card hidden">
+          <div class="card-head">
+            <h4>Next 24 hours</h4>
+            <div id="chartUnit" class="muted small">°C</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="tempChart" aria-label="Temperature chart" role="img"></canvas>
+          </div>
+        </div>
+
+        <div id="forecastCard" class="card forecast-card hidden">
+          <h4>Short forecast</h4>
+          <div id="forecastList" class="forecast-list"></div>
+        </div>
+      </section>
+
+      <!-- right column: extras -->
+      <aside class="right-column card">
+        <div class="card-head">
+          <h4>Quick actions</h4>
+        </div>
+
+        <div class="actions">
+          <button id="refreshBtn" class="secondary-btn">Refresh</button>
+          <button id="downloadBtn" class="secondary-btn">Download JSON</button>
+        </div>
+
+        <div class="attribution muted small" style="margin-top:12px">
+          Data via OpenWeatherMap · UI made by you
+        </div>
+      </aside>
+    </main>
+
+    <!-- small helper / errors / loader -->
+    <div id="error" class="error hidden" role="alert"></div>
+
+    <div id="loader" class="loader hidden" aria-hidden="true"></div>
+
+    <footer class="app-footer muted small">
+      Tip: Save favorite cities for quick access.
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
